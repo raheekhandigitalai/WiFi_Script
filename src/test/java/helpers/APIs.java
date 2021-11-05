@@ -4,6 +4,11 @@ import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.json.JSONArray;
+import org.apache.http.HttpHeaders;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 
 import java.io.InputStream;
 
@@ -16,12 +21,24 @@ public class APIs {
      *
      */
 
-    HttpResponse<JsonNode> responseJson = null;
-    HttpResponse<String> responseString = null;
-    HttpResponse<InputStream> responseInputStream = null;
+    protected HttpResponse<JsonNode> responseJson = null;
+    protected HttpResponse<String> responseString = null;
+    protected HttpResponse<InputStream> responseInputStream = null;
 
     public String cloudUrlAndApiEndPoint() {
         return new PropertiesReader().getProperty("seetest.cloudUrl") + new PropertiesReader().getProperty("seetest.devices.apiEndPoint");
+    }
+
+    public String accessKey() {
+        return new PropertiesReader().getProperty("seetest.accessKey");
+    }
+
+    public String accessKeyCleanupUser() {
+        return new PropertiesReader().getProperty("seetest.cleanupUser.accessKey");
+    }
+
+    public String cloudUrl() {
+        return new PropertiesReader().getProperty("seetest.cloudUrl");
     }
 
 //    public void sendSlackMessage(String message) {
@@ -43,7 +60,7 @@ public class APIs {
 
     public String getDeviceId(String serialNumber) {
         responseJson = Unirest.get(cloudUrlAndApiEndPoint() + "?query=@serialnumber='" + serialNumber + "'")
-                .header("Authorization", "Bearer " + new PropertiesReader().getProperty("seetest.accessKey"))
+                .header("Authorization", "Bearer " + accessKey())
                 .header("content-type", "application/json")
                 .asJson();
 
@@ -63,7 +80,7 @@ public class APIs {
     public void getDeviceTags(String deviceId) {
         // GET /api/v1/devices/{id}/tags
         responseJson = Unirest.get(cloudUrlAndApiEndPoint() + "/" + deviceId + "/tags")
-                .header("Authorization", "Bearer eyJ4cC51Ijo3MzU0MjQsInhwLnAiOjIsInhwLm0iOiJNVFUzT0RZd016ZzFOek16TVEiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE4OTM5NjM4NTcsImlzcyI6ImNvbS5leHBlcml0ZXN0In0.GP0hK0o0j2WEKt-J0aXsVbu1tmt-PhWUryqluokszJk")
+                .header("Authorization", "Bearer " + accessKey())
                 .header("content-type", "application/json")
                 .asJson();
 
@@ -74,7 +91,7 @@ public class APIs {
     public void addDeviceTag(String deviceId, String tagValue) {
         // PUT /api/v1/devices/{id}/tags/{tag_value}
         responseJson = Unirest.put(cloudUrlAndApiEndPoint() + "/" + deviceId + "/tags/" + tagValue)
-                .header("Authorization", "Bearer eyJ4cC51Ijo3MzU0MjQsInhwLnAiOjIsInhwLm0iOiJNVFUzT0RZd016ZzFOek16TVEiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE4OTM5NjM4NTcsImlzcyI6ImNvbS5leHBlcml0ZXN0In0.GP0hK0o0j2WEKt-J0aXsVbu1tmt-PhWUryqluokszJk")
+                .header("Authorization", "Bearer " + accessKey())
                 .header("content-type", "application/json")
                 .asJson();
 
@@ -85,7 +102,7 @@ public class APIs {
     public void removeDeviceTag(String deviceId, String tagValue) {
         // DELETE /api/v1/devices/{id}/tags/{tag_value}
         responseJson = Unirest.delete(cloudUrlAndApiEndPoint() + "/" + deviceId + "/tags/" + tagValue)
-                .header("Authorization", "Bearer eyJ4cC51Ijo3MzU0MjQsInhwLnAiOjIsInhwLm0iOiJNVFUzT0RZd016ZzFOek16TVEiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE4OTM5NjM4NTcsImlzcyI6ImNvbS5leHBlcml0ZXN0In0.GP0hK0o0j2WEKt-J0aXsVbu1tmt-PhWUryqluokszJk")
+                .header("Authorization", "Bearer " + accessKey())
                 .header("content-type", "application/json")
                 .asJson();
 
@@ -96,12 +113,21 @@ public class APIs {
     public void removeAllDeviceTags(String deviceId) {
         // DELETE /api/v1/devices/{id}/tags
         responseJson = Unirest.delete(cloudUrlAndApiEndPoint() + "/" + deviceId + "/tags")
-                .header("Authorization", "Bearer eyJ4cC51Ijo3MzU0MjQsInhwLnAiOjIsInhwLm0iOiJNVFUzT0RZd016ZzFOek16TVEiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE4OTM5NjM4NTcsImlzcyI6ImNvbS5leHBlcml0ZXN0In0.GP0hK0o0j2WEKt-J0aXsVbu1tmt-PhWUryqluokszJk")
+                .header("Authorization", "Bearer " + accessKey())
                 .header("content-type", "application/json")
                 .asJson();
 
         System.out.println(responseJson.getStatus());
         System.out.println(responseJson.getBody());
+    }
+
+    public void finishCleanupState(String uid, String status) {
+        HttpPost post = new HttpPost(cloudUrl() + "/api/v1/cleanup-finish?deviceId=" + uid + "&status=" + status);
+        post.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessKeyCleanupUser());
+
+        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+             CloseableHttpResponse response = httpClient.execute(post)) {
+        } catch (Exception ignore){ }
     }
 
 }

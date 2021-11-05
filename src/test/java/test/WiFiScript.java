@@ -12,6 +12,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -30,9 +31,22 @@ public class WiFiScript {
 
     String deviceSerialNumber = "00008020-0005656621A2002E";
 
+    private String uid = System.getenv("deviceID");
+    private String os = System.getenv("deviceOS");
+    private String deviceName = System.getenv("deviceName");
+    private String osVersion = System.getenv("osVersion");
+    private String deviceModel = System.getenv("deviceModel");
+    private String deviceManufacturer = System.getenv("deviceManufacturer");
+    private String deviceCategory = System.getenv("deviceCategory");
+    private String username = System.getenv("username");
+    private String userProject = System.getenv("userProject");
+
+    private String status = "failed";
+
     @BeforeMethod
-    public void setUp() throws MalformedURLException {
+    public void setUp(Method method) throws MalformedURLException {
         api = new APIs();
+        dc.setCapability("testName", method.getName());
         dc.setCapability("accessKey", new PropertiesReader().getProperty("seetest.accessKey"));
         dc.setCapability("deviceQuery", "@os='ios' and @category='PHONE'");
 //        dc.setCapability("udid", deviceSerialNumber);
@@ -41,6 +55,7 @@ public class WiFiScript {
 
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
+        api.finishCleanupState(uid, status);
         System.out.println("Report URL: " + driver.getCapabilities().getCapability("reportUrl"));
         if (driver != null) {
             driver.quit();
@@ -106,6 +121,7 @@ public class WiFiScript {
             }
 
         }
+        status = "passed";
     }
 
 }

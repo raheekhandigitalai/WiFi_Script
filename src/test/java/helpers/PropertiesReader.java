@@ -22,6 +22,10 @@ public class PropertiesReader {
                 throw new Exception("SeeTest Cloud Access Key not found. Please look in resources/config.properties.");
             }
 
+            if (props.getProperty("seetest.cleanupUser.accessKey").isEmpty()) {
+                throw new Exception("SeeTest Cloud Access Key for Cleanup User not found. Please look in resources/config.properties.");
+            }
+
             if (props.getProperty("seetest.cloudUrl").isEmpty()) {
                 throw new Exception("SeeTest Cloud URL not found. Please look in resources/config.properties.");
             }
@@ -29,10 +33,6 @@ public class PropertiesReader {
             if (props.getProperty("seetest.devices.apiEndPoint").isEmpty()) {
                 throw new Exception("SeeTest Cloud Devices End Point not found. Please look in resources/config.properties.");
             }
-
-//            if (props.getProperty("slack.webhookUrl").isEmpty()) {
-//                throw new Exception("Slack Webhook URL not found. Please look in resources/config.properties.");
-//            }
 
         } catch(Exception e) {
             e.printStackTrace();
