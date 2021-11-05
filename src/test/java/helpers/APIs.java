@@ -24,22 +24,22 @@ public class APIs {
         return new PropertiesReader().getProperty("seetest.cloudUrl") + new PropertiesReader().getProperty("seetest.devices.apiEndPoint");
     }
 
-    public void sendSlackMessage(String message) {
-        responseString = Unirest.post(new PropertiesReader().getProperty("slack.webhookUrl"))
-                .header("content-type", "application/json")
-                .body("{\r\n    \"text\": \"" + message + "\"\r\n}")
-                .asString();
-
-        if (responseString.getStatus() == 200) {
-            System.out.println("HTTP Status: " + responseString.getStatus());
-            System.out.println("HTTP Body: " + responseString.getBody());
-            System.out.println("Successfully sent Slack Message: " + message);
-        } else {
-            System.err.println("HTTP Status: " + responseString.getStatus());
-            System.err.println("HTTP Body: " + responseString.getBody());
-            System.err.println("Failed to send Message");
-        }
-    }
+//    public void sendSlackMessage(String message) {
+//        responseString = Unirest.post(new PropertiesReader().getProperty("slack.webhookUrl"))
+//                .header("content-type", "application/json")
+//                .body("{\r\n    \"text\": \"" + message + "\"\r\n}")
+//                .asString();
+//
+//        if (responseString.getStatus() == 200) {
+//            System.out.println("HTTP Status: " + responseString.getStatus());
+//            System.out.println("HTTP Body: " + responseString.getBody());
+//            System.out.println("Successfully sent Slack Message: " + message);
+//        } else {
+//            System.err.println("HTTP Status: " + responseString.getStatus());
+//            System.err.println("HTTP Body: " + responseString.getBody());
+//            System.err.println("Failed to send Message");
+//        }
+//    }
 
     public String getDeviceId(String serialNumber) {
         responseJson = Unirest.get(cloudUrlAndApiEndPoint() + "?query=@serialnumber='" + serialNumber + "'")

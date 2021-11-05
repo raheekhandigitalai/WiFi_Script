@@ -25,8 +25,8 @@ public class WiFiScript {
     private String wifiName = "UKCustomers_ALL";
     private String certName = "mitmproxy";
 
-    private String goodTagValue = "Good Device";
-    private String badTagValue = "Bad Device";
+    private String goodTagValue = "Good_Device";
+    private String badTagValue = "Bad_Device";
 
     String deviceSerialNumber = "00008020-0005656621A2002E";
 
@@ -100,7 +100,7 @@ public class WiFiScript {
 
                 api.removeAllDeviceTags(deviceId);
                 api.addDeviceTag(deviceId, badTagValue);
-                api.sendSlackMessage("Device Not Good");
+//                api.sendSlackMessage("Device Not Good");
             } else {
                 System.out.println("Did not get into Certs page");
             }
