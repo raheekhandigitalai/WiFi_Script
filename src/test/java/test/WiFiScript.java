@@ -48,7 +48,8 @@ public class WiFiScript {
         api = new APIs();
         dc.setCapability("testName", method.getName());
         dc.setCapability("accessKey", new PropertiesReader().getProperty("seetest.accessKey"));
-        dc.setCapability("deviceQuery", "@os='ios' and @category='PHONE'");
+//        dc.setCapability("deviceQuery", "@os='ios' and @category='PHONE'");
+        dc.setCapability("deviceQuery", "@serialnumber='" + uid + "'");
 //        dc.setCapability("udid", deviceSerialNumber);
         driver = new IOSDriver<>(new URL(new PropertiesReader().getProperty("seetest.cloudUrl") + "/wd/hub"), dc);
     }
