@@ -12,7 +12,11 @@ public class PropertiesReader {
         Properties props = System.getProperties();
 
         try {
-            props.load(new FileInputStream(new File(System.getProperty("user.dir") + "\\src\\test\\resources\\config.properties")));
+            if (getOperatingSystem().contains("Win")) {
+                props.load(new FileInputStream(new File(System.getProperty("user.dir") + "\\src\\test\\resources\\config.properties")));
+            } else if (getOperatingSystem().contains("Mac")) {
+                props.load(new FileInputStream(new File(System.getProperty("user.dir") + "/src/test/resources/config.properties")));
+            }
 
             if (props.getProperty("seetest.accessKey").isEmpty()) {
                 throw new Exception("SeeTest Cloud Access Key not found. Please look in resources/config.properties.");
@@ -35,6 +39,11 @@ public class PropertiesReader {
             System.exit(-1);
         }
         return System.getProperty(property);
+    }
+
+    private String getOperatingSystem() {
+        String os = System.getProperty("os.name");
+        return os;
     }
 
 }
