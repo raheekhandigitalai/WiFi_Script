@@ -30,9 +30,9 @@ public class PropertiesReader {
                 throw new Exception("SeeTest Cloud Devices End Point not found. Please look in resources/config.properties.");
             }
 
-            if (props.getProperty("slack.webhookUrl").isEmpty()) {
-                throw new Exception("Slack Webhook URL not found. Please look in resources/config.properties.");
-            }
+//            if (props.getProperty("slack.webhookUrl").isEmpty()) {
+//                throw new Exception("Slack Webhook URL not found. Please look in resources/config.properties.");
+//            }
 
         } catch(Exception e) {
             e.printStackTrace();
