@@ -124,12 +124,12 @@ public class APIs {
 
     public void finishCleanupState(String uid, String status) {
 //        HttpGet get = new HttpGet("https://e8f5-69-160-252-231.ngrok.io/crumbIssuer/api/json");
-        String crumbRequestField = "Jenkins-Crumb";
-        String crumbResponse = "0ad618c15bda87182e19d5ced2ec8647607275fea0174de33b6550d526ef475b";
+//        String crumbRequestField = "Jenkins-Crumb";
+//        String crumbResponse = "0ad618c15bda87182e19d5ced2ec8647607275fea0174de33b6550d526ef475b";
 
         HttpPost post = new HttpPost(cloudUrl() + "/api/v1/cleanup-finish?deviceId=" + uid + "&status=" + status);
         post.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessKeyCleanupUser());
-        post.addHeader(crumbRequestField, crumbResponse);
+//        post.addHeader(crumbRequestField, crumbResponse);
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault();
              CloseableHttpResponse response = httpClient.execute(post)) {
