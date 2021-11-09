@@ -9,11 +9,4 @@
         </classes>
     </test>
 
-<!--    <test name="2">-->
-
-<!--        <classes>-->
-<!--            <class name="test.DummyTest" />-->
-<!--        </classes>-->
-<!--    </test>-->
-
 </suite>

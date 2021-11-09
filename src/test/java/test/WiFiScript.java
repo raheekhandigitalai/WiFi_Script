@@ -83,6 +83,7 @@ public class WiFiScript {
 
         String wifiLabel = null;
 
+        Thread.sleep(6000);
         // Different iOS Models / Versions had different identifiers for finding the WiFi text, hence handling as try / catch
         try {
             wifiLabel = new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='UIPreferencesBlueCheck']//parent::*//parent::*/following-sibling::*[@knownSuperClass='UILabel']"))).getText().trim();
@@ -120,9 +121,9 @@ public class WiFiScript {
                 // Iterate through each profile to verify whether the desired Cert exists
                 for (IOSElement profile : profiles) {
                     if (profile.getText().contains(certName)) {
-                        System.out.println("Hello 1");
+                        System.out.println("Contains Profile");
                     } else {
-                        System.out.println("Hello 2");
+                        System.out.println("Does Not Contain Profile");
                     }
                 }
 
