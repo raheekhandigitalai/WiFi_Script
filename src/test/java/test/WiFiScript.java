@@ -45,7 +45,7 @@ public class WiFiScript {
     public void setUp(Method method) throws MalformedURLException {
         api = new APIs();
         dc.setCapability("testName", method.getName());
-        dc.setCapability("accessKey", new PropertiesReader().getProperty("seetest.accessKey"));
+        dc.setCapability("accessKey", new PropertiesReader().getProperty("seetest.cleanupUser.accessKey"));
 //        dc.setCapability("deviceQuery", "@serialnumber='" + uid + "'");
         dc.setCapability("releaseDevice", false);
         dc.setCapability("udid", "56793ec400fe2121df8a6341591cbd25b7c26c70");
