@@ -43,18 +43,18 @@ public class DummyTest {
 
     @Test
     public void testing_01() {
-        getCrumbInformation();
+        System.out.println(uid);
     }
 
-    public void getCrumbInformation() {
-        responseJson = Unirest.get("https://e8f5-69-160-252-231.ngrok.io/crumbIssuer/api/json")
-                .basicAuth("rahee", "Surrahee22")
-                .asJson();
-
-        JSONArray array = responseJson.getBody().getArray();
-        String crumb = array.getJSONObject(0).getString("crumb");
-        String crumbRequestField = array.getJSONObject(0).getString("crumbRequestField");
-    }
+//    public void getCrumbInformation() {
+//        responseJson = Unirest.get("https://e8f5-69-160-252-231.ngrok.io/crumbIssuer/api/json")
+//                .basicAuth("rahee", "Surrahee22")
+//                .asJson();
+//
+//        JSONArray array = responseJson.getBody().getArray();
+//        String crumb = array.getJSONObject(0).getString("crumb");
+//        String crumbRequestField = array.getJSONObject(0).getString("crumbRequestField");
+//    }
 
 //    @AfterMethod(alwaysRun = true)
 //    public void tearDown() {
