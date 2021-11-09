@@ -2,10 +2,17 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Test Automation">
 
-    <test name="1">
+<!--    <test name="1">-->
+
+<!--        <classes>-->
+<!--            <class name="test.WiFiScript" />-->
+<!--        </classes>-->
+<!--    </test>-->
+
+    <test name="2">
 
         <classes>
-            <class name="test.WiFiScript" />
+            <class name="test.DummyTest" />
         </classes>
     </test>
 
