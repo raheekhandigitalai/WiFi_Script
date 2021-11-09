@@ -50,12 +50,18 @@ public class WiFiScript {
         dc.setCapability("accessKey", new PropertiesReader().getProperty("seetest.cleanupUser.accessKey"));
 //        dc.setCapability("deviceQuery", "@serialnumber='" + uid + "'");
         dc.setCapability("releaseDevice", false);
+        dc.setCapability("autoDismissAlerts", true);
         dc.setCapability("udid", UDID);
         driver = new IOSDriver<>(new URL(new PropertiesReader().getProperty("seetest.cloudUrl") + "/wd/hub"), dc);
     }
 
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
+//        try {
+//            api.finishCleanupState(UDID, status);
+//        } catch (Exception e) {
+//
+//        }
 //        api.finishCleanupState(uid, status);
         api.finishCleanupState(UDID, status);
         System.out.println("Report URL: " + driver.getCapabilities().getCapability("reportUrl"));
@@ -76,11 +82,16 @@ public class WiFiScript {
         new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@text='Wi-Fi' and @knownSuperClass='UITableViewLabel']"))).click();
 
         String wifiLabel = null;
+
         // Different iOS Models / Versions had different identifiers for finding the WiFi text, hence handling as try / catch
         try {
-            wifiLabel = new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='selected']//parent::*/following-sibling::*[@knownSuperClass='UILabel']"))).getText().trim();
-        } catch (Exception e) {
-            wifiLabel = new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='checkmark']//parent::*/following-sibling::*[@knownSuperClass='UILabel']"))).getText().trim();
+            wifiLabel = new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='UIPreferencesBlueCheck']//parent::*//parent::*/following-sibling::*[@knownSuperClass='UILabel']"))).getText().trim();
+        } catch (Exception e1) {
+            try {
+                wifiLabel = new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='selected']//parent::*/following-sibling::*[@knownSuperClass='UILabel']"))).getText().trim();
+            } catch (Exception e2) {
+                wifiLabel = new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='checkmark']//parent::*/following-sibling::*[@knownSuperClass='UILabel']"))).getText().trim();
+            }
         }
 
         // Check if WiFi Label contains the desired WiFi name
