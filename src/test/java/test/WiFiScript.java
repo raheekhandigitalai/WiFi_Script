@@ -43,26 +43,19 @@ public class WiFiScript {
 
     @BeforeMethod
     public void setUp(Method method) throws MalformedURLException {
-        System.out.println(uid);
-        System.out.println(os);
-        System.out.println(deviceName);
-        System.out.println(osVersion);
-        System.out.println(deviceModel);
-        System.out.println(deviceManufacturer);
-        System.out.println(deviceCategory);
-        System.out.println(username);
-        System.out.println(userProject);
         api = new APIs();
         dc.setCapability("testName", method.getName());
         dc.setCapability("accessKey", new PropertiesReader().getProperty("seetest.accessKey"));
-        dc.setCapability("deviceQuery", "@serialnumber='" + uid + "'");
-//        dc.setCapability("udid", deviceSerialNumber);
+//        dc.setCapability("deviceQuery", "@serialnumber='" + uid + "'");
+        dc.setCapability("releaseDevice", false);
+        dc.setCapability("udid", "56793ec400fe2121df8a6341591cbd25b7c26c70");
         driver = new IOSDriver<>(new URL(new PropertiesReader().getProperty("seetest.cloudUrl") + "/wd/hub"), dc);
     }
 
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
         api.finishCleanupState(uid, status);
+        api.finishCleanupState("56793ec400fe2121df8a6341591cbd25b7c26c70", status);
         System.out.println("Report URL: " + driver.getCapabilities().getCapability("reportUrl"));
         if (driver != null) {
             driver.quit();
