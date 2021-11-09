@@ -41,7 +41,7 @@ public class WiFiScript {
 
     private String status = "failed";
 
-    private String UDID = "56793ec400fe2121df8a6341591cbd25b7c26c70";
+    private String UDID = "011adb5554652d475d6a4f325877a48ccc384e75";
 
     @BeforeMethod
     public void setUp(Method method) throws MalformedURLException {
