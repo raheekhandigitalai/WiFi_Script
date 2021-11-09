@@ -21,24 +21,6 @@ import java.net.URL;
 
 public class DummyTest {
 
-    IOSDriver driver = null;
-
-
-    @BeforeMethod
-    public void setUp(Method method) {
-        System.out.println("Hello System");
-    }
-
-    @Test
-    public void testing_01() {
-        System.out.println(uid);
-    }
-
-    @AfterMethod
-    public void tearDown() {
-        driver.quit();
-    }
-
 //    public void getCrumbInformation() {
 //        responseJson = Unirest.get("https://e8f5-69-160-252-231.ngrok.io/crumbIssuer/api/json")
 //                .basicAuth("rahee", "Surrahee22")
