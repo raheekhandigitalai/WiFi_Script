@@ -26,6 +26,9 @@ public class APIs {
     protected HttpResponse<String> responseString = null;
     protected HttpResponse<InputStream> responseInputStream = null;
 
+    protected String crumb = "";
+    protected String crumbRequestField = "";
+
     public String cloudUrlAndApiEndPoint() {
         return new PropertiesReader().getProperty("seetest.cloudUrl") + new PropertiesReader().getProperty("seetest.devices.apiEndPoint");
     }
@@ -81,6 +84,13 @@ public class APIs {
             System.err.println("Failed to send Message");
         }
     }
+
+//    public void getCrumbInformation() {
+//        responseString = Unirest.get("https://e8f5-69-160-252-231.ngrok.io/crumbIssuer/api/json")
+//                .asString();
+//
+//        System.out.println(responseString.getBody());
+//    }
 
     public String getDeviceId(String serialNumber) {
         responseJson = Unirest.get(cloudUrlAndApiEndPoint() + "?query=@serialnumber='" + serialNumber + "'")
@@ -156,11 +166,22 @@ public class APIs {
 
         HttpPost post = new HttpPost(cloudUrl() + "/api/v1/cleanup-finish?deviceId=" + uid + "&status=" + status);
         post.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessKeyCleanupUser());
-//        post.addHeader(crumbRequestField, crumbResponse);
+        post.addHeader(crumbRequestField, crumb);
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault();
              CloseableHttpResponse response = httpClient.execute(post)) {
         } catch (Exception ignore){ }
+    }
+
+    @Test
+    public void getCrumbInformation() {
+        responseJson = Unirest.get("https://e8f5-69-160-252-231.ngrok.io/crumbIssuer/api/json")
+                .basicAuth("rahee", "Surrahee22")
+                .asJson();
+
+        JSONArray array = responseJson.getBody().getArray();
+        crumb = array.getJSONObject(0).getString("crumb");
+        crumbRequestField = array.getJSONObject(0).getString("crumbRequestField");
     }
 
 }
