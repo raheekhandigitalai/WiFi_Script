@@ -29,8 +29,6 @@ public class WiFiScript {
     private String goodTagValue = "Good_Device";
     private String badTagValue = "Bad_Device";
 
-    String deviceSerialNumber = "00008020-0005656621A2002E";
-
     private String uid = System.getenv("deviceID");
     private String os = System.getenv("deviceOS");
     private String deviceName = System.getenv("deviceName");
@@ -48,7 +46,6 @@ public class WiFiScript {
         api = new APIs();
         dc.setCapability("testName", method.getName());
         dc.setCapability("accessKey", new PropertiesReader().getProperty("seetest.accessKey"));
-//        dc.setCapability("deviceQuery", "@os='ios' and @category='PHONE'");
         dc.setCapability("deviceQuery", "@serialnumber='" + uid + "'");
 //        dc.setCapability("udid", deviceSerialNumber);
         driver = new IOSDriver<>(new URL(new PropertiesReader().getProperty("seetest.cloudUrl") + "/wd/hub"), dc);
