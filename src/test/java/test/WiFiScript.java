@@ -101,8 +101,10 @@ public class WiFiScript {
             api.removeAllDeviceTags(deviceId);
             api.addDeviceTag(deviceId, goodTagValue);
         } else {
-            // Check Cert
             System.out.println("Does Not Contain WiFi Name");
+            api.removeAllDeviceTags(deviceId);
+            api.addDeviceTag(deviceId, badTagValue);
+            // api.sendSlackMessage("Device Not Good");
 
             // Launch Settings, last parameter "true" defines the Settings App will launch a fresh instance, to ensure we are always on the front page
             driver.executeScript("seetest:client.launch(\"com.apple.Preferences\", \"false\", \"true\")");
@@ -110,28 +112,28 @@ public class WiFiScript {
             // Swipe down and click on "General"
             driver.executeScript("seetest:client.swipeWhileNotFound(\"DOWN\", 500, 1000, \"NATIVE\", \"//XCUIElementTypeCell[@id='General' and @onScreen='true']\", 0, 1000, 2, true)");
 
-            // Swipe down and click on "Profiles"
-            driver.executeScript("seetest:client.swipeWhileNotFound(\"DOWN\", 500, 1000, \"NATIVE\", \"//*[@id='ManagedConfigurationList' and @onScreen='true']\", 0, 1000, 2, true)");
+            try {
+                // Swipe down and click on "Profiles"
+                driver.executeScript("seetest:client.swipeWhileNotFound(\"DOWN\", 500, 1000, \"NATIVE\", \"//*[@id='ManagedConfigurationList' and @onScreen='true']\", 0, 1000, 2, true)");
 
-            // Check if we are on the Profiles page
-            if (new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@accessibilityLabel='CONFIGURATION PROFILE']"))).isDisplayed()) {
-                // Define a list of elements based on certs present in the Profiles page
-                List<IOSElement> profiles = driver.findElements(By.xpath("//XCUIElementTypeCell"));
+                // Check if we are on the Profiles page
+                if (new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@accessibilityLabel='CONFIGURATION PROFILE']"))).isDisplayed()) {
+                    // Define a list of elements based on certs present in the Profiles page
+                    List<IOSElement> profiles = driver.findElements(By.xpath("//XCUIElementTypeCell"));
 
-                // Iterate through each profile to verify whether the desired Cert exists
-                for (IOSElement profile : profiles) {
-                    if (profile.getText().contains(certName)) {
-                        System.out.println("Contains Profile");
-                    } else {
-                        System.out.println("Does Not Contain Profile");
+                    // Iterate through each profile to verify whether the desired Cert exists
+                    for (IOSElement profile : profiles) {
+                        if (profile.getText().contains(certName)) {
+                            System.out.println("Contains Profile");
+                        } else {
+                            System.out.println("Does Not Contain Profile");
+                        }
                     }
+                } else {
+                    System.out.println("Did not get into Certs page");
                 }
-
-                api.removeAllDeviceTags(deviceId);
-                api.addDeviceTag(deviceId, badTagValue);
-//                api.sendSlackMessage("Device Not Good");
-            } else {
-                System.out.println("Did not get into Certs page");
+            } catch (Exception e) {
+                System.out.println("Was not able to find profile. Check if device has Profiles option in General > Settings.");
             }
 
         }

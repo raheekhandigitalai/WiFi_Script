@@ -62,9 +62,9 @@ public class APIs {
                 .header("content-type", "application/json")
                 .asJson();
 
-        System.out.println(responseJson.getStatus());
-        System.out.println(responseJson.getBody());
-        System.out.println("====================");
+//        System.out.println(responseJson.getStatus());
+//        System.out.println(responseJson.getBody());
+//        System.out.println("====================");
 
         JSONArray array = responseJson.getBody().getArray();
         JSONArray data = array.getJSONObject(0).getJSONArray("data");
