@@ -41,7 +41,7 @@ public class WiFiScript {
 
     private String status = "failed";
 
-    private String UDID = "011adb5554652d475d6a4f325877a48ccc384e75";
+    private String UDID = "56793ec400fe2121df8a6341591cbd25b7c26c70";
 
     @BeforeMethod
     public void setUp(Method method) throws MalformedURLException {
@@ -57,17 +57,9 @@ public class WiFiScript {
 
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
-//        try {
-//            api.finishCleanupState(UDID, status);
-//        } catch (Exception e) {
-//
-//        }
-//        api.finishCleanupState(uid, status);
         api.finishCleanupState(UDID, status);
         System.out.println("Report URL: " + driver.getCapabilities().getCapability("reportUrl"));
-        if (driver != null) {
-            driver.quit();
-        }
+        driver.quit();
     }
 
     @Test
