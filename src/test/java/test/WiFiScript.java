@@ -48,10 +48,10 @@ public class WiFiScript {
         api = new APIs();
         dc.setCapability("testName", method.getName());
         dc.setCapability("accessKey", new PropertiesReader().getProperty("seetest.cleanupUser.accessKey"));
-//        dc.setCapability("deviceQuery", "@serialnumber='" + uid + "'");
+        dc.setCapability("deviceQuery", "@serialnumber='" + uid + "'");
         dc.setCapability("releaseDevice", false);
         dc.setCapability("autoDismissAlerts", true);
-        dc.setCapability("udid", UDID);
+//        dc.setCapability("udid", UDID);
         driver = new IOSDriver<>(new URL(new PropertiesReader().getProperty("seetest.cloudUrl") + "/wd/hub"), dc);
     }
 
@@ -68,6 +68,7 @@ public class WiFiScript {
         String deviceId = api.getDeviceId((String) driver.getCapabilities().getCapability("udid"));
 
         // Launch Settings, last parameter "true" defines the Settings App will launch a fresh instance, to ensure we are always on the front page
+        driver.executeScript("seetest:client.launch(\"com.apple.Preferences\", \"false\", \"true\")");
         driver.executeScript("seetest:client.launch(\"com.apple.Preferences\", \"false\", \"true\")");
 
         // Wait for WiFi object to be clickable, and click once found
