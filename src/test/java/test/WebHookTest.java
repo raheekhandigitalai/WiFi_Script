@@ -33,16 +33,18 @@ public class WebHookTest {
         dc.setCapability("testName", "Eribank iOS - from WebHook");
         dc.setCapability("accessKey", accessKey);
         dc.setCapability("deviceQuery", "@serialnumber='" + uid + "'");
-        dc.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank");
-        dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.experitest.ExperiBank");
+//        dc.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank");
+//        dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.experitest.ExperiBank");
         driver = new IOSDriver<>(new URL("https://uscloud.experitest.com/wd/hub"), dc);
     }
 
     @Test
     public void quickStartiOSNativeDemo() {
-        driver.findElement(By.xpath("//*[@id='usernameTextField']")).sendKeys("company");
-        driver.findElement(By.xpath("//*[@id='passwordTextField']")).sendKeys("company");
-        driver.findElement(By.xpath("//*[@id='loginButton']")).click();
+//        driver.findElement(By.xpath("//*[@id='usernameTextField']")).sendKeys("company");
+//        driver.findElement(By.xpath("//*[@id='passwordTextField']")).sendKeys("company");
+//        driver.findElement(By.xpath("//*[@id='loginButton']")).click();
+        driver.executeScript("seetest:client.launch(\"com.apple.Preferences\", \"false\", \"true\")");
+        driver.executeScript("seetest:client.launch(\"com.apple.Preferences\", \"false\", \"true\")");
         status = "passed";
     }
 
