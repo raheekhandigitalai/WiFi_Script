@@ -22,6 +22,7 @@ import org.testng.annotations.Test;
 public class WebHookTest {
 
     private String accessKey = "eyJ4cC51IjoyLCJ4cC5wIjoxLCJ4cC5tIjoiTVRVMk1Ea3pNemM0TURJM013IiwiYWxnIjoiSFMyNTYifQ.eyJleHAiOjE5MDIzMDk5OTQsImlzcyI6ImNvbS5leHBlcml0ZXN0In0.2MlUpOV5QR731X-fSl6KDbIscQQtW01YmNneWZb14cI";
+    private String userAccessKey = "eyJhbGciOiJIUzI1NiJ9.eyJ4cC51IjoyODEzMzc5LCJ4cC5wIjoyODEzMzc2LCJ4cC5tIjoxNjM1MzAzMDc0NjU5LCJleHAiOjE5NTA2NjMwNzQsImlzcyI6ImNvbS5leHBlcml0ZXN0In0.0yLfP4aIJZjtDuiF7SFHBpsOUK8xISjWl_zA6YjJrd4";
     private IOSDriver<IOSElement> driver = null;
     private DesiredCapabilities dc = new DesiredCapabilities();
     private String status = "failed";
@@ -31,7 +32,7 @@ public class WebHookTest {
     public void setUp() throws MalformedURLException {
         System.out.println(System.getenv());
         dc.setCapability("testName", "Eribank iOS - from WebHook");
-        dc.setCapability("accessKey", accessKey);
+        dc.setCapability("accessKey", userAccessKey);
         dc.setCapability("deviceQuery", "@serialnumber='" + uid + "'");
         dc.setCapability("releaseDevice", false);
 //        dc.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank");
