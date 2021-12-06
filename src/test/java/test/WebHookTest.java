@@ -33,6 +33,7 @@ public class WebHookTest {
         dc.setCapability("testName", "Eribank iOS - from WebHook");
         dc.setCapability("accessKey", accessKey);
         dc.setCapability("deviceQuery", "@serialnumber='" + uid + "'");
+        dc.setCapability("releaseDevice", false);
 //        dc.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank");
         dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.apple.Preferences");
         driver = new IOSDriver<>(new URL("https://uscloud.experitest.com/wd/hub"), dc);
@@ -40,6 +41,7 @@ public class WebHookTest {
 
     @Test
     public void quickStartiOSNativeDemo() throws InterruptedException {
+        System.out.println(uid);
 //        driver.findElement(By.xpath("//*[@id='usernameTextField']")).sendKeys("company");
 //        driver.findElement(By.xpath("//*[@id='passwordTextField']")).sendKeys("company");
 //        driver.findElement(By.xpath("//*[@id='loginButton']")).click();
@@ -49,7 +51,7 @@ public class WebHookTest {
         status = "passed";
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
         sendResponseToCloud();
         System.out.println("Report URL: "+ driver.getCapabilities().getCapability("reportUrl"));
