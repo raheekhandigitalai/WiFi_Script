@@ -53,9 +53,9 @@ public class WebHookTest {
 
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
-        sendResponseToCloud();
         System.out.println("Report URL: "+ driver.getCapabilities().getCapability("reportUrl"));
         driver.quit();
+        sendResponseToCloud();
     }
 
     private void sendResponseToCloud() {
