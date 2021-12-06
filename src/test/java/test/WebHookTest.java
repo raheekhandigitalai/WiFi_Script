@@ -33,18 +33,19 @@ public class WebHookTest {
         dc.setCapability("testName", "Eribank iOS - from WebHook");
         dc.setCapability("accessKey", accessKey);
         dc.setCapability("deviceQuery", "@serialnumber='" + uid + "'");
-        dc.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank");
-        dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.experitest.ExperiBank");
+//        dc.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank");
+        dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.apple.Preferences");
         driver = new IOSDriver<>(new URL("https://uscloud.experitest.com/wd/hub"), dc);
     }
 
     @Test
-    public void quickStartiOSNativeDemo() {
+    public void quickStartiOSNativeDemo() throws InterruptedException {
 //        driver.findElement(By.xpath("//*[@id='usernameTextField']")).sendKeys("company");
 //        driver.findElement(By.xpath("//*[@id='passwordTextField']")).sendKeys("company");
 //        driver.findElement(By.xpath("//*[@id='loginButton']")).click();
 //        driver.executeScript("seetest:client.launch(\"com.apple.Preferences\", \"false\", \"true\")");
 //        driver.executeScript("seetest:client.launch(\"com.apple.Preferences\", \"false\", \"true\")");
+        Thread.sleep(5000);
         status = "passed";
     }
 
