@@ -5,7 +5,7 @@
     <test name="1">
 
         <classes>
-            <class name="test.WiFiScript" />
+            <class name="test.WebHookTest" />
         </classes>
     </test>
 
